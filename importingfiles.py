@@ -1,3 +1,5 @@
+
+
 """
 Listing sheets in Excel files
 """
@@ -27,7 +29,7 @@ print(df2.head())
 """
 importing SAS files
 """
-import matplotlib.pyplot as dick
+import matplotlib.pyplot as plt
 import pandas as pd
 # Import sas7bdat package
 from sas7bdat import SAS7BDAT
@@ -41,8 +43,8 @@ print(df_sas.head())
 
 # Plot histogram of DataFrame features (pandas and pyplot already imported)
 pd.DataFrame.hist(df_sas[['P']])
-dick.ylabel('count')
-dick.show()
+plt.ylabel('count')
+plt.show()
 
 """
 importing STATA files
@@ -102,4 +104,32 @@ time = np.arange(0 , 1 , 1/num_samples)
 plt.plot(time, strain[:num_samples])
 plt.xlabel('GPS Time (s)')
 plt.ylabel('strain')
+plt.show()
+
+"""
+Loading .mat files
+"""
+# first start by importing the scipy package
+import scipy.io
+#  next load the desired matlab file to the variable: mat
+mat = scipy.io.loadmat('albeck_gene_expression.mat')
+# next lets print the data type of the file
+print(type(mat))
+
+"""
+The structure of .mat in Python
+"""
+
+# print the keys of the matlab dictionary
+print(mat.keys())
+# print the type of value corresponding to the key 'CYrationCyt'
+print(type(mat['CYratioCyt']))
+# print the shape of the value corresponding to the key 'CYrationCyt'
+print(np.shape(mat['CYratioCyt']))
+# subset the array and plot it
+data = mat['CYratioCyt'][25, 5:]
+fig = plt.figure()
+plt.plot(data)
+plt.xlabel('time (min.)')
+plt.ylabel('normalized fluorescence (measure of expression)')
 plt.show()
