@@ -3,6 +3,7 @@ Listing sheets in Excel files
 """
 # Import pandas
 import pandas as pd
+
 # Assign spreadsheet filename: file
 file = 'battledeath.xlsx'
 # Load spreadsheet: xl
@@ -22,9 +23,6 @@ print(df1.head())
 df2 = xl.parse('2002', index_col=0)
 # Print the head of the DataFrame df2
 print(df2.head())
-
-
-
 
 """
 importing SAS files
@@ -52,12 +50,14 @@ importing STATA files
 
 # import pandas
 import pandas as pd
+
 # load stata file into a pandas DataFrame: df
 df = pd.read_stata('disarea.dta')
 # print the head of the DataFrame df
 print(df.head())
 # plot histogram of one column of the DataFrame
 import matplotlib.pyplot as plt
+
 pd.DataFrame.hist(df[['disa10']])
 plt.xlabel('Extent of desease')
 plt.ylabel('Number of coutnries')
@@ -80,3 +80,26 @@ print(type(data))
 # print the keys of the file
 for key in data.keys():
     print(key)
+
+"""
+Extracting data from your HDF5 file
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+# Get the HDF5 group: group
+group = data['strain']
+# data was loaded in the previous section of code
+# Check out keys of group
+for key in group.keys():
+    print(key)
+# set the variable equal to time series data: strain
+strain = data['strain']['Strain'].value
+# set number of time points to sample: num_samples
+num_samples = 10000
+# Set time vector
+time = np.arange(0 , 1 , 1/num_samples)
+# plot data
+plt.plot(time, strain[:num_samples])
+plt.xlabel('GPS Time (s)')
+plt.ylabel('strain')
+plt.show()
